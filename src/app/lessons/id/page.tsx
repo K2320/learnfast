@@ -1,16 +1,27 @@
-'use client'
+"use client"
 
-import { useState, Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState, Suspense } from "react"
+import { Canvas } from "@react-three/fiber"
+import { OrbitControls, PerspectiveCamera, Environment } from "@react-three/drei"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const lessonContent = {
-  1: {
+// Define the type for lesson content
+type LessonModel = () => JSX.Element
+
+interface LessonContent {
+  title: string
+  content: string
+  model?: LessonModel
+  interactive?: string
+}
+
+const lessonContent: Record<string, LessonContent> = {
+  "1": {
     title: "Introduction to Electricity",
-    content: "Electricity is a form of energy resulting from the movement of charged particles. It powers our modern world and is fundamental to many technological advancements.",
+    content:
+      "Electricity is a form of energy resulting from the movement of charged particles. It powers our modern world and is fundamental to many technological advancements.",
     model: () => (
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
@@ -18,32 +29,32 @@ const lessonContent = {
       </mesh>
     ),
   },
-  2: {
+  "2": {
     title: "Circuits",
     content: "A circuit is a complete path around which electricity can flow...",
     interactive: "Build a simple circuit by connecting the components!",
   },
-  3: {
+  "3": {
     title: "Conductors and Insulators",
     content: "Conductors allow electricity to flow easily, while insulators prevent its flow...",
     interactive: "Sort materials into conductors and insulators!",
   },
-  4: {
+  "4": {
     title: "Magnetism and Electricity",
     content: "Magnetism and electricity are closely related phenomena...",
     interactive: "Move the magnet to generate electricity!",
   },
-  5: {
+  "5": {
     title: "Energy Conservation",
     content: "Energy conservation is the practice of using energy efficiently...",
     interactive: "Design an energy-efficient home!",
   },
-  6: {
+  "6": {
     title: "Electrical Safety",
     content: "Electrical safety is crucial to prevent accidents and injuries...",
     interactive: "Identify and fix electrical hazards in a virtual room!",
   },
-  7: {
+  "7": {
     title: "Future of Electricity",
     content: "The future of electricity involves renewable sources and smart grids...",
     interactive: "Design a city powered by renewable energy sources!",
@@ -53,7 +64,19 @@ const lessonContent = {
 export default function LessonPage({ params }: { params: { id: string } }) {
   const [showQuiz, setShowQuiz] = useState(false)
   const router = useRouter()
-  const lesson = lessonContent[params.id as keyof typeof lessonContent]
+
+  // Add error handling for invalid lesson IDs
+  const lesson = lessonContent[params.id]
+  if (!lesson) {
+    return (
+      <div className="min-h-screen bg-gray-100 p-8">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-gray-800">Lesson not found</h1>
+          <Button onClick={() => router.push("/lessons")}>Return to Lessons</Button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -66,18 +89,16 @@ export default function LessonPage({ params }: { params: { id: string } }) {
             </CardHeader>
             <CardContent>
               <p className="mb-4">{lesson.content}</p>
-              {!showQuiz && (
-                <Button onClick={() => setShowQuiz(true)}>Take Quiz</Button>
-              )}
+              {!showQuiz && <Button onClick={() => setShowQuiz(true)}>Take Quiz</Button>}
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Interactive 3D Model</CardTitle>
+              <CardTitle>Interactive Content</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-[400px]">
-                {lesson.model && (
+                {lesson.model ? (
                   <Canvas>
                     <PerspectiveCamera makeDefault position={[0, 0, 5]} />
                     <OrbitControls enableZoom={false} />
@@ -88,14 +109,19 @@ export default function LessonPage({ params }: { params: { id: string } }) {
                       <Environment preset="studio" />
                     </Suspense>
                   </Canvas>
-                )}
-                {!lesson.model && (
+                ) : lesson.interactive ? (
                   <div className="border-2 border-dashed border-gray-300 p-4 mb-4 text-center">
-                    <p>{lesson.interactive}</p>
+                    <p className="text-lg font-medium mb-4">{lesson.interactive}</p>
                     <div className="bg-gray-100 p-4 mt-4 rounded">
-                      <p>Placeholder for interactive element</p>
-                      <p>This will be replaced with an actual interactive component later</p>
+                      <p>Interactive element placeholder</p>
+                      <p className="text-sm text-gray-600">
+                        This will be replaced with an actual interactive component
+                      </p>
                     </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-gray-500">No interactive content available</p>
                   </div>
                 )}
               </div>
@@ -122,7 +148,9 @@ export default function LessonPage({ params }: { params: { id: string } }) {
                   <p>What safety precautions should be taken when working with electrical devices?</p>
                 </div>
               </div>
-              <Button onClick={() => router.push('/dashboard')} className="mt-4">Submit Quiz</Button>
+              <Button onClick={() => router.push("/dashboard")} className="mt-4">
+                Submit Quiz
+              </Button>
             </CardContent>
           </Card>
         )}
