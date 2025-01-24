@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Suspense, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { truncateText, formatDate } from './global'
+import { truncateText, formatDate } from './globals'
 import * as THREE from 'three'
 import ThreeGlobe from 'three-globe'
 
