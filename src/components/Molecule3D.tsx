@@ -2,6 +2,8 @@ import type React from "react"
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import { Sphere, Cylinder } from "@react-three/drei"
+import * as THREE from "three"
+
 
 const Atom = ({ position, color }: { position: [number, number, number]; color: string }) => (
   <Sphere position={position} args={[0.2, 32, 32]}>

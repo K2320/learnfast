@@ -1,17 +1,19 @@
 "use client"
 
+import React, { Suspense } from "react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { truncateText, formatDate } from "./globals"
-import { Canvas } from "@react-three/fiber"
+
+const DynamicCanvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
+  ssr: false,
+})
 
 const DynamicComplexMolecule3D = dynamic(
   () => import("@/components/ComplexMolecule3D").then((mod) => mod.ComplexMolecule3D),
   {
     ssr: false,
-    loading: () => <p>Loading 3D model...</p>,
   },
 )
 
@@ -37,11 +39,11 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="md:w-1/2 h-[400px] relative">
-          <Canvas>
+          <DynamicCanvas camera={{ position: [0, 0, 10], fov: 75 }}>
             <Suspense fallback={null}>
               <DynamicComplexMolecule3D />
             </Suspense>
-          </Canvas>
+          </DynamicCanvas>
         </div>
       </div>
     </div>

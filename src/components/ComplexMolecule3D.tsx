@@ -1,18 +1,19 @@
 "use client"
 
+import type React from "react"
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
 
-const Atom = ({ position, color }: { position: [number, number, number]; color: string }) => (
+const Atom: React.FC<{ position: [number, number, number]; color: string }> = ({ position, color }) => (
   <mesh position={position}>
     <sphereGeometry args={[0.2, 32, 32]} />
     <meshStandardMaterial color={color} />
   </mesh>
 )
 
-const Bond = ({ start, end }: { start: [number, number, number]; end: [number, number, number] }) => {
+const Bond: React.FC<{ start: [number, number, number]; end: [number, number, number] }> = ({ start, end }) => {
   const position = start.map((coord, index) => (coord + end[index]) / 2) as [number, number, number]
   const direction = new THREE.Vector3().subVectors(new THREE.Vector3(...end), new THREE.Vector3(...start)).normalize()
   const length = new THREE.Vector3(...start).distanceTo(new THREE.Vector3(...end))
@@ -26,7 +27,7 @@ const Bond = ({ start, end }: { start: [number, number, number]; end: [number, n
   )
 }
 
-export function ComplexMolecule3D() {
+export const ComplexMolecule3D: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame(() => {
