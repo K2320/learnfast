@@ -1,1 +1,26 @@
-self.__RSC_CSS_MANIFEST={"cssImports":{"/workspaces/learnfast/src/app/layout.tsx":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"]},"cssModules":{"/workspaces/learnfast/src/app/page":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"],"/workspaces/learnfast/src/app/dashboard/page":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"],"/workspaces/learnfast/src/app/home/page":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"],"/workspaces/learnfast/src/app/lessons/page":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"],"/workspaces/learnfast/src/app/lessons/id/page":["/workspaces/learnfast/src/app/globals.css","/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"]}}
+self.__RSC_CSS_MANIFEST={
+  "cssImports": {
+    "/workspaces/learnfast/src/app/layout.tsx": [
+      "/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}",
+      "/workspaces/learnfast/src/app/globals.css"
+    ]
+  },
+  "cssModules": {
+    "/workspaces/learnfast/src/app/page": [
+      "/workspaces/learnfast/src/app/globals.css",
+      "/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
+    ],
+    "/workspaces/learnfast/src/app/home/page": [
+      "/workspaces/learnfast/src/app/globals.css",
+      "/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
+    ],
+    "/workspaces/learnfast/src/app/dashboard/page": [
+      "/workspaces/learnfast/src/app/globals.css",
+      "/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
+    ],
+    "/workspaces/learnfast/src/app/lessons/page": [
+      "/workspaces/learnfast/src/app/globals.css",
+      "/workspaces/learnfast/node_modules/next/font/google/target.css?{\"path\":\"src/app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
+    ]
+  }
+}
