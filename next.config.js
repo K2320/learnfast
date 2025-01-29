@@ -5,5 +5,10 @@ const nextConfig = {
   distDir: 'build',
 }
 
-module.exports = nextConfig
+module.exports = {
+  basePath: process.env.NODE_ENV === 'production' ? '/learnfast':'',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/learnfast':'',
+  output: 'export',
+};
+
 
