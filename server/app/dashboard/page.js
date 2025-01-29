@@ -4,22 +4,6 @@ exports.id = 702;
 exports.ids = [702];
 exports.modules = {
 
-/***/ 40252:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/compiled/cookie");
-
-/***/ }),
-
-/***/ 97999:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/compiled/path-to-regexp");
-
-/***/ }),
-
 /***/ 18038:
 /***/ ((module) => {
 
@@ -172,22 +156,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 71017:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("path");
-
-/***/ }),
-
-/***/ 57310:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("url");
-
-/***/ }),
-
 /***/ 83718:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -256,25 +224,13 @@ __webpack_require__.r(__webpack_exports__);
       },
         {
           
-          metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 41764))).default(props))],
-    apple: [],
-    openGraph: [],
-    twitter: [],
-    manifest: undefined
-  }
+          
         }
       ]
       },
         {
           'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 82309)), "/workspaces/learnfast/src/app/layout.tsx"],
-          metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 41764))).default(props))],
-    apple: [],
-    openGraph: [],
-    twitter: [],
-    manifest: undefined
-  }
+          
         }
       ]
       }.children;
@@ -518,7 +474,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [405,981,331,834,475,768,599], () => (__webpack_exec__(83718)));
+var __webpack_exports__ = __webpack_require__.X(0, [143,331,834,960,768,599], () => (__webpack_exec__(83718)));
 module.exports = __webpack_exports__;
 
 })();
