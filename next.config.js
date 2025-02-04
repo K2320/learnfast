@@ -3,8 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['three-globe'],
   distDir: 'build',
-  basePath: process.env.NODE_ENV === 'production' ? '/learnfast' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/learnfast' : '',
+  basePath: "/learnfast",
   output: 'export',
 };
 
