@@ -1,10 +1,13 @@
-/** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['three-globe'],
-  distDir: 'build',
-  basePath: "/learnfast",
-  output: 'export',
+  images: {
+    unoptimized: true, // Disable default image optimization
+  },
+  assetPrefix: isProd ? '/learnfast/' : '',
+  basePath: isProd ? '/learnfast' : '',
+  output: 'export'
 };
 
-module.exports = nextConfig;
+export default nextConfig;
+

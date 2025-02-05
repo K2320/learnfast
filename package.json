@@ -2,10 +2,10 @@
   "name": "learn-fast",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://k2320.github.io/learnfast/",
+  "homepage": "https://k2320.github.io/learnfast",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d out --nojekyll",
     "dev": "next dev",
     "build": "next build ",
     "start": "next start",
