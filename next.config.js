@@ -1,14 +1,13 @@
-/** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['three-globe'],
-  distDir: 'build',
-}
-
-module.exports = {
-  basePath: process.env.NODE_ENV === 'production' ? '/learnfast':'',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/learnfast':'',
-  output: 'export',
+  images: {
+    unoptimized: true, // Disable default image optimization
+  },
+  assetPrefix: isProd ? '/learnfast/' : '',
+  basePath: isProd ? '/learnfast' : '',
+  output: 'export'
 };
 
+export default nextConfig;
 
