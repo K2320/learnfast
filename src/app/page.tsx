@@ -1,50 +1,78 @@
 "use client"
-
-import React, { Suspense } from "react"
 import Link from "next/link"
-import dynamic from "next/dynamic"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { truncateText, formatDate } from "./globals"
-
-const DynamicCanvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
-  ssr: false,
-})
-
-const DynamicComplexMolecule3D = dynamic(
-  () => import("@/components/ComplexMolecule3D").then((mod) => mod.ComplexMolecule3D),
-  {
-    ssr: false,
-  },
-)
+import { Card, CardContent } from "@/components/ui/card"
+import { InteractiveCircuit } from "@/components/Interactivecircuit"
+import { ChevronRight, Zap, Book, Trophy } from "lucide-react"
 
 export default function LandingPage() {
-  const description =
-    "Dive into the microscopic world of molecules with our interactive 3D models. Explore the building blocks of life and matter through cutting-edge visualization technology."
-  const currentDate = new Date()
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
-      <div className="flex-grow flex flex-col md:flex-row items-center justify-center p-8">
-        <div className="md:w-1/2 mb-8 md:mb-0">
-          <h1 className="text-5xl font-bold mb-4 text-gray-800">Learn Fast</h1>
-          <p className="text-xl mb-8 text-gray-600 max-w-md">{truncateText(description, 150)}</p>
-          <p className="text-sm text-gray-500 mb-4">Last updated: {formatDate(currentDate)}</p>
-          <div className="space-x-4">
-            <Button asChild>
-              <Link href="/home">Get Started</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/about">Learn More</Link>
-            </Button>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      <div className="container mx-auto px-4 py-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-6xl font-extrabold text-white mb-4">Electrify Your Mind</h1>
+          <p className="text-xl text-white opacity-80 max-w-2xl mx-auto">
+            Dive into the fascinating world of electricity with interactive lessons and challenges.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
+            <CardContent className="p-6">
+              <Zap className="w-12 h-12 mb-4 text-yellow-400" />
+              <h2 className="text-2xl font-bold mb-4">Interactive Circuit</h2>
+              <p className="mb-4 opacity-80">Experiment with a real circuit. Turn it on and off to see how it works!</p>
+              <InteractiveCircuit />
+            </CardContent>
+          </Card>
+
+          <div className="space-y-8">
+            <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
+              <CardContent className="p-6">
+                <Book className="w-12 h-12 mb-4 text-green-400" />
+                <h2 className="text-2xl font-bold mb-2">Comprehensive Lessons</h2>
+                <p className="mb-4 opacity-80">From basic concepts to advanced applications, learn it all.</p>
+                <Button asChild variant="secondary" className="w-full">
+                  <Link href="/lessons">
+                    Explore Lessons <ChevronRight className="ml-2" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
+              <CardContent className="p-6">
+                <Trophy className="w-12 h-12 mb-4 text-yellow-400" />
+                <h2 className="text-2xl font-bold mb-2">Daily Challenges</h2>
+                <p className="mb-4 opacity-80">Test your knowledge with our electrifying daily puzzles.</p>
+                <Button asChild variant="secondary" className="w-full">
+                  <Link href="/daily-challenge">
+                    Start Challenge <ChevronRight className="ml-2" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
-        <div className="md:w-1/2 h-[400px] relative">
-          <DynamicCanvas camera={{ position: [0, 0, 10], fov: 75 }}>
-            <Suspense fallback={null}>
-              <DynamicComplexMolecule3D />
-            </Suspense>
-          </DynamicCanvas>
-        </div>
+
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-white/90">
+            <Link href="/lessons">
+              Start Your Electrifying Journey <ChevronRight className="ml-2" />
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </div>
   )

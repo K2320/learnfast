@@ -1,38 +1,39 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import Link from "next/link"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const lessons = [
-  { id: 1, title: "Introduction to Electricity", icon: "⚡" },
-  { id: 2, title: "Circuits and Components", icon: "🔌" },
-  { id: 3, title: "Conductors and Insulators", icon: "🔧" },
-  { id: 4, title: "Magnetism and Electromagnetism", icon: "🧲" },
-  { id: 5, title: "Energy Conservation and Efficiency", icon: "♻️" },
-  { id: 6, title: "Electrical Safety and Best Practices", icon: "🚨" },
-  { id: 7, title: "Future of Electrical Technology", icon: "🔮" },
+  { id: "circuits", title: "Introduction to Circuits" },
+  { id: "1", title: "Introduction to Electricity" },
+  { id: "2", title: "Circuits" },
+  { id: "3", title: "Conductors and Insulators" },
+  { id: "4", title: "Magnetism and Electricity" },
+  { id: "5", title: "Energy Conservation" },
+  { id: "6", title: "Electrical Safety" },
+  { id: "7", title: "Future of Electricity" },
 ]
 
 export default function LessonsPage() {
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800">Electricity Lessons</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-8 text-indigo-600">Electricity Lessons</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {lessons.map((lesson) => (
-            <Card key={lesson.id}>
+            <Card key={lesson.id} className="hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <span className="text-2xl mr-2">{lesson.icon}</span>
-                  {lesson.title}
-                </CardTitle>
+                <CardTitle>{lesson.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <Button asChild>
-                  <Link href={`/lessons/${lesson.id}`}>Start Lesson</Link>
-                </Button>
+                <Link
+                  href={`/lessons/${lesson.id}`}
+                  className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                >
+                  Start Lesson
+                </Link>
               </CardContent>
             </Card>
           ))}
+          
         </div>
       </div>
     </div>
