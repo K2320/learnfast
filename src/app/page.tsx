@@ -4,7 +4,16 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { InteractiveCircuit } from "@/components/Interactivecircuit"
-import { ChevronRight, Zap, Book, Trophy } from "lucide-react"
+import { ChevronRight, Zap, Book } from "lucide-react"
+
+const topics = [
+  { title: "Introduction to Electricity", icon: "⚡" },
+  { title: "Circuits and Components", icon: "🔌" },
+  { title: "Conductors and Insulators", icon: "🔧" },
+  { title: "Magnetism and Electromagnetism", icon: "🧲" },
+  { title: "Energy Conservation", icon: "♻️" },
+  { title: "Electrical Safety", icon: "🚨" },
+]
 
 export default function LandingPage() {
   return (
@@ -32,33 +41,26 @@ export default function LandingPage() {
             </CardContent>
           </Card>
 
-          <div className="space-y-8">
-            <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
-              <CardContent className="p-6">
-                <Book className="w-12 h-12 mb-4 text-green-400" />
-                <h2 className="text-2xl font-bold mb-2">Comprehensive Lessons</h2>
-                <p className="mb-4 opacity-80">From basic concepts to advanced applications, learn it all.</p>
-                <Button asChild variant="secondary" className="w-full">
-                  <Link href="/lessons">
-                    Explore Lessons <ChevronRight className="ml-2" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
-              <CardContent className="p-6">
-                <Trophy className="w-12 h-12 mb-4 text-yellow-400" />
-                <h2 className="text-2xl font-bold mb-2">Daily Challenges</h2>
-                <p className="mb-4 opacity-80">Test your knowledge with our electrifying daily puzzles.</p>
-                <Button asChild variant="secondary" className="w-full">
-                  <Link href="/daily-challenge">
-                    Start Challenge <ChevronRight className="ml-2" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="bg-white/10 backdrop-blur-lg border-none text-white">
+            <CardContent className="p-6">
+              <Book className="w-12 h-12 mb-4 text-green-400" />
+              <h2 className="text-2xl font-bold mb-4">What You'll Learn</h2>
+              <ul className="space-y-2">
+                {topics.map((topic, index) => (
+                  <motion.li
+                    key={index}
+                    className="flex items-center text-lg"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <span className="mr-2 text-2xl">{topic.icon}</span>
+                    {topic.title}
+                  </motion.li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </div>
 
         <motion.div
@@ -67,7 +69,7 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-white/90">
+          <Button asChild variant="fun" size="lg" className="text-lg font-bold">
             <Link href="/lessons">
               Start Your Electrifying Journey <ChevronRight className="ml-2" />
             </Link>

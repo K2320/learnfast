@@ -14,9 +14,10 @@ interface QuizQuestion {
 
 interface QuizProps {
   questions: QuizQuestion[]
+  onComplete: (score: number) => void
 }
 
-export const Quiz: React.FC<QuizProps> = ({ questions }) => {
+export const Quiz: React.FC<QuizProps> = ({ questions, onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [score, setScore] = useState(0)
@@ -36,6 +37,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
       setCurrentQuestion(currentQuestion + 1)
     } else {
       setShowResult(true)
+      onComplete(score + (selectedAnswer === questions[currentQuestion].correctAnswer ? 1 : 0))
     }
   }
 

@@ -22,7 +22,7 @@ const Bond: React.FC<{ start: [number, number, number]; end: [number, number, nu
   return (
     <mesh position={position} quaternion={quaternion}>
       <cylinderGeometry args={[0.05, 0.05, length, 8]} />
-      <meshStandardMaterial color="white" />
+      <meshStandardMaterial color="#FFD54F" />
     </mesh>
   )
 }
@@ -43,31 +43,31 @@ export const ComplexMolecule3D: React.FC = () => {
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
 
       <group ref={groupRef}>
-        <Atom position={[0, 0, 0]} color="#ff4136" />
-        <Atom position={[1, 1, 1]} color="#0074d9" />
-        <Atom position={[-1, 1, -1]} color="#2ecc40" />
-        <Atom position={[1, -1, -1]} color="#ffdc00" />
-        <Atom position={[-1, -1, 1]} color="#b10dc9" />
+        <Atom position={[0, 0, 0]} color="#FF4081" />
+        <Atom position={[1, 1, 1]} color="#00BCD4" />
+        <Atom position={[-1, 1, -1]} color="#4CAF50" />
+        <Atom position={[1, -1, -1]} color="#FFC107" />
+        <Atom position={[-1, -1, 1]} color="#9C27B0" />
 
         <Bond start={[0, 0, 0]} end={[1, 1, 1]} />
         <Bond start={[0, 0, 0]} end={[-1, 1, -1]} />
         <Bond start={[0, 0, 0]} end={[1, -1, -1]} />
         <Bond start={[0, 0, 0]} end={[-1, -1, 1]} />
 
-        <Atom position={[2, 2, 2]} color="#ff4136" />
-        <Atom position={[3, 3, 3]} color="#0074d9" />
+        <Atom position={[2, 2, 2]} color="#FF4081" />
+        <Atom position={[3, 3, 3]} color="#00BCD4" />
         <Bond start={[2, 2, 2]} end={[3, 3, 3]} />
 
-        <Atom position={[-2, 2, -2]} color="#2ecc40" />
-        <Atom position={[-3, 3, -3]} color="#ffdc00" />
+        <Atom position={[-2, 2, -2]} color="#4CAF50" />
+        <Atom position={[-3, 3, -3]} color="#FFC107" />
         <Bond start={[-2, 2, -2]} end={[-3, 3, -3]} />
 
-        <Atom position={[2, -2, -2]} color="#b10dc9" />
-        <Atom position={[3, -3, -3]} color="#ff4136" />
+        <Atom position={[2, -2, -2]} color="#9C27B0" />
+        <Atom position={[3, -3, -3]} color="#FF4081" />
         <Bond start={[2, -2, -2]} end={[3, -3, -3]} />
 
-        <Atom position={[-2, -2, 2]} color="#0074d9" />
-        <Atom position={[-3, -3, 3]} color="#2ecc40" />
+        <Atom position={[-2, -2, 2]} color="#00BCD4" />
+        <Atom position={[-3, -3, 3]} color="#4CAF50" />
         <Bond start={[-2, -2, 2]} end={[-3, -3, 3]} />
       </group>
     </>

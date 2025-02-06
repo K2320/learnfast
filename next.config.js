@@ -1,13 +1,15 @@
-const isProd = process.env.NODE_ENV === 'production';
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: {
-    unoptimized: true, // Disable default image optimization
+  transpilePackages: ["three-globe"],
+  webpack: (config) => {
+    config.externals = [...config.externals, { canvas: "canvas" }]
+    return config
   },
-  assetPrefix: isProd ? '/learnfast/' : '',
-  basePath: isProd ? '/learnfast' : '',
-  output: 'export'
-};
+  images: {
+    domains: ["example.com"], // Add the domain where your Nikola Tesla image is hosted
+  },
+}
 
-export default nextConfig;
+module.exports = nextConfig
 

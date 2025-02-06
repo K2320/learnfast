@@ -1,50 +1,34 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog"
 
 export function NameInputModal() {
   const [open, setOpen] = useState(true)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
 
   const handleSubmit = () => {
     // In a real app, you'd save this to an API or local storage
-    console.log('Name submitted:', firstName, lastName)
+    console.log("Name submitted:", firstName, lastName)
     setOpen(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Welcome to Learn Fast</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Input
-              id="firstName"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="col-span-4"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Input
-              id="lastName"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="col-span-4"
-            />
-          </div>
+      <DialogContent>
+        <div>
+          <DialogTitle>Welcome to Learn Fast!</DialogTitle>
         </div>
-        <DialogFooter>
+        <div className="grid gap-4 py-4">
+          <Input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          <Input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        </div>
+        <div>
           <Button onClick={handleSubmit}>Start Learning</Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   )

@@ -1,161 +1,177 @@
 "use client"
 
-import { useState, Suspense } from "react"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, PerspectiveCamera, Environment } from "@react-three/drei"
+import { useState, useEffect } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Quiz } from "@/components/Quiz"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { lessonContent as importedLessonContent } from "../lesson-data"
 
-// Define the type for lesson content
-type LessonModel = () => JSX.Element
-
-interface LessonContent {
-  title: string
-  content: string
-  model?: LessonModel
-  interactive?: string
-}
-
-const lessonContent: Record<string, LessonContent> = {
-  "1": {
-    title: "Introduction to Electricity",
-    content:
-      "Electricity is a form of energy resulting from the movement of charged particles. It powers our modern world and is fundamental to many technological advancements.",
-    model: () => (
-      <mesh>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#4285F4" />
-      </mesh>
-    ),
-  },
-  "2": {
-    title: "Circuits",
-    content: "A circuit is a complete path around which electricity can flow...",
-    interactive: "Build a simple circuit by connecting the components!",
-  },
-  "3": {
-    title: "Conductors and Insulators",
-    content: "Conductors allow electricity to flow easily, while insulators prevent its flow...",
-    interactive: "Sort materials into conductors and insulators!",
-  },
-  "4": {
-    title: "Magnetism and Electricity",
-    content: "Magnetism and electricity are closely related phenomena...",
-    interactive: "Move the magnet to generate electricity!",
-  },
-  "5": {
-    title: "Energy Conservation",
-    content: "Energy conservation is the practice of using energy efficiently...",
-    interactive: "Design an energy-efficient home!",
-  },
-  "6": {
-    title: "Electrical Safety",
-    content: "Electrical safety is crucial to prevent accidents and injuries...",
-    interactive: "Identify and fix electrical hazards in a virtual room!",
-  },
-  "7": {
-    title: "Future of Electricity",
-    content: "The future of electricity involves renewable sources and smart grids...",
-    interactive: "Design a city powered by renewable energy sources!",
-  },
-}
-
-export default function LessonPage({ params }: { params: { id: string } }) {
-  const [showQuiz, setShowQuiz] = useState(false)
+export default function LessonPage() {
+  const params = useParams()
   const router = useRouter()
+  const lessonId = params.id as string
+  const [showQuiz, setShowQuiz] = useState(false)
 
-  // Add error handling for invalid lesson IDs
-  const lesson = lessonContent[params.id]
+  // Get the lesson content
+  const lesson = importedLessonContent[lessonId]
+
+  // If the lesson doesn't exist, redirect to the lessons page
+  useEffect(() => {
+    if (!lesson) {
+      router.push("/lessons")
+    }
+  }, [lesson, router])
+
+  // Update lesson progress
+  useEffect(() => {
+    try {
+      const lessonProgress = JSON.parse(localStorage.getItem("lessonProgress") || "[]")
+      const currentLessonIndex = lessonProgress.findIndex((l: any) => l.id === lessonId)
+
+      if (currentLessonIndex === -1) {
+        lessonProgress.push({ id: lessonId, completed: false, quizScore: null })
+      } else if (!lessonProgress[currentLessonIndex].completed) {
+        lessonProgress[currentLessonIndex].completed = true
+      }
+      localStorage.setItem("lessonProgress", JSON.stringify(lessonProgress))
+    } catch (error) {
+      console.error("Error updating lesson progress:", error)
+    }
+  }, [lessonId])
+
+  // Handle quiz completion
+  const handleQuizComplete = (score: number) => {
+    try {
+      const lessonProgress = JSON.parse(localStorage.getItem("lessonProgress") || "[]")
+      const currentLessonIndex = lessonProgress.findIndex((l: any) => l.id === lessonId)
+
+      if (currentLessonIndex !== -1) {
+        lessonProgress[currentLessonIndex].quizScore = score
+        localStorage.setItem("lessonProgress", JSON.stringify(lessonProgress))
+      }
+      router.push("/dashboard")
+    } catch (error) {
+      console.error("Error saving quiz score:", error)
+    }
+  }
+
+  // If the lesson doesn't exist, redirect to the lessons page
   if (!lesson) {
-    return (
-      <div className="min-h-screen bg-gray-100 p-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-gray-800">Lesson not found</h1>
-          <Button onClick={() => router.push("/lessons")}>Return to Lessons</Button>
-        </div>
-      </div>
-    )
+    return null
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800">{lesson.title}</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <Button asChild variant="ghost" className="mb-4 hover:bg-white/50">
+            <Link href="/lessons">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Lessons
+            </Link>
+          </Button>
+
+          <motion.h1
+            className="text-4xl font-bold text-indigo-600"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {lesson.title}
+          </motion.h1>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <Card className="bg-white shadow-lg">
             <CardHeader>
               <CardTitle>Lesson Content</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">{lesson.content}</p>
-              {!showQuiz && <Button onClick={() => setShowQuiz(true)}>Take Quiz</Button>}
+              <p className="text-lg whitespace-pre-line">{lesson.content}</p>
             </CardContent>
           </Card>
-          <Card>
+
+          <Card className="bg-white shadow-lg">
             <CardHeader>
-              <CardTitle>Interactive Content</CardTitle>
+              <CardTitle>Virtual Model</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
-                {lesson.model ? (
-                  <Canvas>
-                    <PerspectiveCamera makeDefault position={[0, 0, 5]} />
-                    <OrbitControls enableZoom={false} />
-                    <ambientLight intensity={0.5} />
-                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                    <Suspense fallback={null}>
-                      {lesson.model()}
-                      <Environment preset="studio" />
-                    </Suspense>
-                  </Canvas>
-                ) : lesson.interactive ? (
-                  <div className="border-2 border-dashed border-gray-300 p-4 mb-4 text-center">
-                    <p className="text-lg font-medium mb-4">{lesson.interactive}</p>
-                    <div className="bg-gray-100 p-4 mt-4 rounded">
-                      <p>Interactive element placeholder</p>
-                      <p className="text-sm text-gray-600">
-                        This will be replaced with an actual interactive component
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center h-full">
-                    <p className="text-gray-500">No interactive content available</p>
-                  </div>
-                )}
+              <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg flex items-center justify-center">
+                <p className="text-gray-500">Interactive model coming soon!</p>
               </div>
             </CardContent>
           </Card>
         </div>
-        {showQuiz && (
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle>Quiz</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <p className="font-semibold">Question 1:</p>
-                  <p>What is the primary source of electrical energy in most power plants?</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Question 2:</p>
-                  <p>Explain the difference between AC and DC current.</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Question 3:</p>
-                  <p>What safety precautions should be taken when working with electrical devices?</p>
-                </div>
-              </div>
-              <Button onClick={() => router.push("/dashboard")} className="mt-4">
-                Submit Quiz
-              </Button>
-            </CardContent>
-          </Card>
+
+        <Card className="mb-8 bg-white shadow-lg">
+          <CardHeader>
+            <CardTitle>Video Lesson</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                src={lesson.videoUrl}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full rounded-lg"
+              ></iframe>
+            </div>
+          </CardContent>
+        </Card>
+
+        {!showQuiz ? (
+          <Button onClick={() => setShowQuiz(true)} variant="fun" size="lg" className="w-full text-lg font-bold">
+            Take Quiz
+          </Button>
+        ) : (
+          <Quiz questions={lesson.quiz} onComplete={handleQuizComplete} />
         )}
       </div>
     </div>
   )
+}
+
+// src/app/lessons/lesson-data.ts
+type Lesson = {
+  id: string;
+  title: string;
+  content: string;
+  videoUrl: string;
+  quiz: {
+    question: string;
+    options: string[];
+    answer: string;
+  }[];
+};
+
+export const lessonContent: { [key: string]: Lesson } = {
+  "introduction-to-circuits": {
+    id: "introduction-to-circuits",
+    title: "Introduction to Circuits",
+    content: `A circuit is a closed path that allows electricity to flow from one point to another. 
+    It typically includes a power source, conductive wires, and various components such as resistors, 
+    capacitors, and switches. Understanding circuits is fundamental to working with electricity.
+    
+    In a basic circuit, electrons flow from the negative terminal of a power source, through the circuit 
+    components, and back to the positive terminal. This flow of electrons is what we call electric current.`,
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    quiz: [
+      {
+        question: "What is the main purpose of a circuit?",
+        options: [
+          "To provide a path for electricity to flow",
+          "To store electrical energy",
+          "To convert electrical energy into mechanical energy",
+          "To measure electrical resistance"
+        ],
+        answer: "To provide a path for electricity to flow"
+      }
+    ]
+  }
+  // Add more lessons here
 }
 
